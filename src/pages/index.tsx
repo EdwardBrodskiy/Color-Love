@@ -1,6 +1,7 @@
 import Color from "color";
 import * as React from "react";
 import ColorTile from "../components";
+import Podium from "../components/podium";
 import {
   setColors,
   getColors,
@@ -46,6 +47,7 @@ const IndexPage = () => {
           nextQuestion();
         }}
       />
+      <Podium colors={top} />
     </main>
   );
 };

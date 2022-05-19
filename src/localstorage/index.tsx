@@ -20,10 +20,16 @@ export const setColors = (new_entries: ColorEntries) => {
     setupColors();
     all_colors = store.get(location);
   }
+  console.log(`set ${all_colors.length}`);
+  console.log(new_entries);
+  const test = indexToColor(32 * 32);
+  console.log(test);
+  console.log(indexToColor(colorToIndex("#ffffff")));
   for (const [color, score] of Object.entries(new_entries)) {
     const color_index = colorToIndex(color);
     all_colors[color_index] = score;
   }
+  console.log(`set2 ${all_colors.length}`);
   store.set(location, all_colors);
 };
 
@@ -33,7 +39,7 @@ export const getColors = (colors: Colors): ColorEntries => {
     setupColors();
     all_colors = store.get(location);
   }
-
+  console.log(`get ${all_colors.length}`);
   const entries: ColorEntries = {};
   colors.forEach((color) => {
     const color_index = colorToIndex(color);
@@ -48,40 +54,42 @@ export const getTopColors = (n: number) => {
     setupColors();
     all_colors = store.get(location);
   }
-
+  console.log(`top ${all_colors.length}`);
   const rated_colors: Array<ColorRatingPair> = all_colors.map(
     (rating, index) => {
       return { color: indexToColor(index), rating: rating };
     }
   );
-  console.log(rated_colors.slice(0, n));
   const sorted_colors = rated_colors.sort((a, b) => {
     if (a.rating === b.rating) {
       return 0;
     }
-    return a.rating - b.rating ? 1 : -1;
+    // console.log(a.rating < b.rating ? 1 : -1);
+    return a.rating < b.rating ? 1 : -1;
   });
-  console.log(sorted_colors.slice(0, n));
   return sorted_colors.slice(0, n);
 };
+
+const div = 32;
 
 const colorToIndex = (color: keyof ColorEntries): number => {
   const rgb = Color(color).rgb().array();
   return (
-    Math.floor(rgb[0] / 16) * 256 +
-    Math.floor(rgb[1] / 16) * 16 +
-    Math.floor(rgb[2] / 16)
+    Math.floor(rgb[0] / div) * div * div +
+    Math.floor(rgb[1] / div) * div +
+    Math.floor(rgb[2] / div)
   );
 };
 
 const indexToColor = (index: number): string => {
-  let rgb = [Math.floor(index / 256), 0, 0];
-  rgb[1] = Math.floor(index / 16) - rgb[0];
-  rgb[2] = index - rgb[1] - rgb[0];
-  rgb = rgb.map((num) => num * 16);
+  let rgb = [Math.floor(index / (div * div)), 0, 0];
+  rgb[1] = Math.floor(index / div) - rgb[0] * div;
+  rgb[2] = index - rgb[1] * div - rgb[0] * div * div;
+  if (index == 32 * 32) console.log(rgb);
+  rgb = rgb.map((num) => num * div);
   return Color.rgb(rgb).hex();
 };
 
 const setupColors = () => {
-  store.set("colors", Array(Math.pow(16, 3)).fill(700));
+  store.set("colors", Array(Math.pow(256 / div, 3)).fill(700));
 };
