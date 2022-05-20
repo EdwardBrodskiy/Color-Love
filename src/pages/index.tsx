@@ -29,7 +29,6 @@ const IndexPage = () => {
   const nextQuestion = () => {
     setColors(getRandomColors());
     setTop(getTopColors(10));
-    console.log(top);
   };
   return (
     <main style={pageStyles}>
@@ -71,18 +70,20 @@ const updateEloScore = (
 ): number => rating + 32 * (result - expected);
 
 const getRandomColors = (): Colors => {
-  let colors: Colors = ["", ""];
+  let colors: Colors = ["#fff", "#fff"];
   while (colors[0] === colors[1]) {
     colors = [randomColor(), randomColor()];
   }
   return colors;
 };
 
-const randomColor = (): string =>
-  Color.rgb(
-    Math.random() * 255,
-    Math.random() * 255,
-    Math.random() * 255
+const randomColor = (): string => {
+  const resolution = 4;
+  return Color.rgb(
+    Math.floor((Math.random() * 256) / (256 / resolution)) * (256 / resolution),
+    Math.floor((Math.random() * 256) / (256 / resolution)) * (256 / resolution),
+    Math.floor((Math.random() * 256) / (256 / resolution)) * (256 / resolution)
   ).hex();
+};
 
 export default IndexPage;
