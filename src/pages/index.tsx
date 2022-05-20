@@ -26,11 +26,16 @@ const pageStyles = {
 
 // markup
 const IndexPage = () => {
-  const [colors, setColors] = React.useState<Colors>(getRandomColors())
-  const [top, setTop] = React.useState<Array<ColorRatingPair>>([])
+  const [colors, setColors] = React.useState<Colors>()
+  const [top, setTop] = React.useState<Array<ColorRatingPair>>(getTopColors(10))
   const nextQuestion = () => {
     setColors(getRandomColors())
     setTop(getTopColors(10))
+  }
+  if (colors == undefined) {
+    nextQuestion()
+    console.log('hi')
+    return <div>loading</div>
   }
   return (
     <main style={pageStyles}>
