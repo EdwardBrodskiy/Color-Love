@@ -1,3 +1,3 @@
-import ColorTile from "./color";
+import ColorTile from './color'
 
-export default ColorTile;
+export default ColorTile

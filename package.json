@@ -13,11 +13,13 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "pretty": "prettier --write \"./src/**/*.{ts,tsx,json,css}\""
   },
   "dependencies": {
     "color": "^4.2.3",
     "gatsby": "^4.14.1",
+    "hex-color-to-color-name": "^1.0.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "store": "^2.0.12"

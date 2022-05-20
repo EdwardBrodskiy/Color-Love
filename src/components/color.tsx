@@ -1,13 +1,13 @@
-import * as React from "react";
+import * as React from 'react'
 
 const colorBlock = {
-  height: "50%",
-  innerWidth: "100%",
-};
+  height: '50%',
+  innerWidth: '100%',
+}
 
 type Props = {
-  color: string;
-};
+  color: string
+}
 
 // markup
 const ColorTile = ({
@@ -16,7 +16,7 @@ const ColorTile = ({
 }: Props & React.HTMLAttributes<HTMLDivElement>) => {
   return (
     <div {...props} style={{ ...colorBlock, backgroundColor: color }}></div>
-  );
-};
+  )
+}
 
-export default ColorTile;
+export default ColorTile
